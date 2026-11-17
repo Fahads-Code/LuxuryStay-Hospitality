@@ -1,0 +1,20 @@
+{
+  "name": "luxurystay-hms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LuxuryStay Hotel Management System - MERN stack eProject",
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently -n API,WEB -c yellow,cyan \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "reset": "npm --prefix server run reset --",
+    "seed:inventory": "npm --prefix server run seed:inventory",
+    "build": "npm run build --prefix client",
+    "start": "npm run start --prefix server",
+    "test": "npm test --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
