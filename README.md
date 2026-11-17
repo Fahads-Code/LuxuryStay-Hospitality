@@ -270,12 +270,12 @@ The repo deploys as one Vercel project: Vite builds the client to `client/dist`,
    | `NODE_ENV` | `production` | Required — disables the in-memory database fallback. |
    | `MONGODB_URI` | `mongodb+srv://…` | A real MongoDB Atlas connection string. Allow all IPs (`0.0.0.0/0`) in Atlas Network Access because serverless egress addresses change. |
    | `JWT_SECRET` | long random value | Never reuse the development placeholder. |
-   | `CLIENT_ORIGIN` | `https://luxurystay.vercel.app` | Your deployed origin; add custom domains here too. |
+   | `CLIENT_ORIGIN` | `https://luxurystay-black.vercel.app` | Your deployed origin; add custom domains here too. |
    | `USE_MEMORY_DB` | `false` | Data must survive serverless restarts. |
    | `LOG_LEVEL` | `combined` | Optional access logging. |
 
-3. Deploy. The site is available at `https://<project>.vercel.app`. To use a custom domain, add it under **Project → Settings → Domains** and include it in `CLIENT_ORIGIN`.
-4. Open the site and complete the first-run setup to create the owner account.
+3. Deploy. The live production URL for this project is **https://luxurystay-black.vercel.app** (`luxurystay.vercel.app` is already registered by another account, so Vercel assigned a scoped alias). To use a custom domain such as `luxurystay.com`, add it under **Project → Settings → Domains** and include it in `CLIENT_ORIGIN`.
+4. Open the site and sign in with the owner account. If the database is fresh, complete the first-run setup instead.
 
 > Note: serverless functions are short-lived, so the server-sent-events stream (`/api/live`) may disconnect. The client automatically falls back to polling and refreshes on tab focus, so data still stays current.
 
