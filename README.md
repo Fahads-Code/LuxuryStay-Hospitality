@@ -258,6 +258,29 @@ The suite starts its own in-memory MongoDB, loads private fixtures from `server/
 
 ---
 
+## Deploying to Vercel
+
+The repo deploys as one Vercel project: Vite builds the client to `client/dist`, and `api/index.js` exposes the Express API as a serverless function. All `/api/*` requests go to the function; every other path serves the SPA.
+
+1. Import `https://github.com/Fahads-Code/LuxuryStay-Hospitality.git` into Vercel (Node.js 22.x). The root `vercel.json` already contains the install/build commands and rewrites.
+2. Add these **Production** environment variables in the Vercel project:
+
+   | Variable | Example | Notes |
+   | --- | --- | --- |
+   | `NODE_ENV` | `production` | Required — disables the in-memory database fallback. |
+   | `MONGODB_URI` | `mongodb+srv://…` | A real MongoDB Atlas connection string. Allow all IPs (`0.0.0.0/0`) in Atlas Network Access because serverless egress addresses change. |
+   | `JWT_SECRET` | long random value | Never reuse the development placeholder. |
+   | `CLIENT_ORIGIN` | `https://luxurystay.vercel.app` | Your deployed origin; add custom domains here too. |
+   | `USE_MEMORY_DB` | `false` | Data must survive serverless restarts. |
+   | `LOG_LEVEL` | `combined` | Optional access logging. |
+
+3. Deploy. The site is available at `https://<project>.vercel.app`. To use a custom domain, add it under **Project → Settings → Domains** and include it in `CLIENT_ORIGIN`.
+4. Open the site and complete the first-run setup to create the owner account.
+
+> Note: serverless functions are short-lived, so the server-sent-events stream (`/api/live`) may disconnect. The client automatically falls back to polling and refreshes on tab focus, so data still stays current.
+
+---
+
 ## Production checklist
 
 - Set `NODE_ENV=production`, a strong `JWT_SECRET`, and a real `MONGODB_URI`
