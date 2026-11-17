@@ -48,10 +48,21 @@ export const createApp = () => {
     .map((origin) => origin.trim())
     .filter(Boolean);
 
+  // Vercel gives every deployment its own preview URL in addition to the
+  // stable alias. Accept the project's own vercel.app origins so previews and
+  // production aliases work without editing environment variables each time.
+  const isVercelPreview = (origin) =>
+    /^https:\/\/luxurystay(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(origin || '');
+
   app.use(
     cors({
       origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin) || env.nodeEnv !== 'production') {
+        if (
+          !origin ||
+          allowedOrigins.includes(origin) ||
+          isVercelPreview(origin) ||
+          env.nodeEnv !== 'production'
+        ) {
           return callback(null, true);
         }
         return callback(null, false);
