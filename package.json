@@ -2,6 +2,7 @@
   "name": "luxurystay-hms",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "LuxuryStay Hotel Management System - MERN stack eProject",
   "engines": {
     "node": "22.x"
